@@ -8,14 +8,19 @@ public class MovingBlock : MonoBehaviour
 {
     [Header("Patrol Settings")]
     [SerializeField] private Transform[] _waypoints;
-    [SerializeField] private AIState currentState;
+    [SerializeField] private AIState _currentState;
 
-    [Header("Common Settings")]
-    [SerializeField] private Transform _head;
+    [Header("View Settings")]
+    [SerializeField] private Transform _enemy;
     [SerializeField] private float _viewAngle = 45f;
     [SerializeField] private float _sightDistance = 15f;
     [SerializeField] private LayerMask _whatIsObstacle;
     [SerializeField] private int _subdivisions = 12;
+
+    [Header("Damage Settings")]
+    [SerializeField] private int _damage = 10;
+    [SerializeField] private float _damageCooldown = 1f;
+    private float _lastHitTime;
 
     private Vector3 _startPosition;
     private int _currentWayPointIndex = 0;
@@ -45,7 +50,7 @@ public class MovingBlock : MonoBehaviour
     }
     void Update()
     {
-        switch (currentState)
+        switch (_currentState)
         {
             case AIState.Idle:
                 IdleState();
@@ -58,7 +63,7 @@ public class MovingBlock : MonoBehaviour
                 break;
         }
 
-        if (currentState != AIState.Chasing && CanSeePlayer())
+        if (_currentState != AIState.Chasing && CanSeePlayer())
         {
             _lineRenderer.startColor = Color.red;
             _lineRenderer.endColor = Color.red;
@@ -68,9 +73,9 @@ public class MovingBlock : MonoBehaviour
 
     private void ChangeState(AIState newState)
     {
-        currentState = newState;
+        _currentState = newState;
 
-        switch (currentState)
+        switch (_currentState)
         {
             case AIState.Idle:
                 PerformPatrol();
@@ -137,7 +142,7 @@ public class MovingBlock : MonoBehaviour
         if (Vector3.Dot(transform.forward, toTarget) < Mathf.Cos(_viewAngle * Mathf.Deg2Rad))
             return false;
 
-        if (Physics.Linecast(_head.position, _target.position, _whatIsObstacle))
+        if (Physics.Linecast(_enemy.position, _target.position, _whatIsObstacle))
             return false;
 
         return true;
@@ -165,5 +170,13 @@ public class MovingBlock : MonoBehaviour
         arcPoints[subdivisions] = Vector3.zero;
 
         _lineRenderer.SetPositions(arcPoints);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+           collision.gameObject.GetComponent<LifeController>().TakeDamage(_damage); 
+        }
     }
 }

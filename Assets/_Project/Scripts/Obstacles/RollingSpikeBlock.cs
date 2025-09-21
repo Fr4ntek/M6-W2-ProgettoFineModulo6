@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class RollingSpikeBlock : MonoBehaviour
 {
-    [SerializeField] private Transform respawnPoint; // punto in alto sulla rampa
+    [SerializeField] private Transform _respawnPoint; // punto in alto sulla rampa
     [SerializeField] private int _damage = 50;
-    [SerializeField] private float damageCooldown = 1f;
+    [SerializeField] private float _damageCooldown = 1f;
 
-    private float lastHitTime;
-    private Rigidbody rb;
+    private float _lastHitTime;
+    private Rigidbody _rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,10 +19,10 @@ public class RollingSpikeBlock : MonoBehaviour
         if (other.CompareTag("SpikeBlockResetPoint"))
         {
             // Reset posizione e velocità
-            transform.position = respawnPoint.position;
-            transform.rotation = respawnPoint.rotation;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            transform.position = _respawnPoint.position;
+            transform.rotation = _respawnPoint.rotation;
+            _rb.velocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
         }
     }
 
@@ -30,10 +30,10 @@ public class RollingSpikeBlock : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (Time.time - lastHitTime >= damageCooldown)
+            if (Time.time - _lastHitTime >= _damageCooldown)
             {
                 collision.gameObject.GetComponent<LifeController>().TakeDamage(_damage);
-                lastHitTime = Time.time;
+                _lastHitTime = Time.time;
             }
         }
     }

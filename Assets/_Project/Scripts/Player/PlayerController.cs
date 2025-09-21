@@ -104,4 +104,17 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1f); 
         _canMove = true;
     }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            MovingPlatform platform = collision.gameObject.GetComponent<MovingPlatform>();
+            if (platform != null)
+            {
+                Vector3 platformVelocity = platform.GetVelocity();
+                _rb.MovePosition(_rb.position + platformVelocity * Time.fixedDeltaTime);
+            }
+        }
+    }
 }

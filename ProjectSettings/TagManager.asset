@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SpikeBlockResetPoint
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
