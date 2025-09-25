@@ -130,6 +130,8 @@ public class MovingBlock : MonoBehaviour
 
     private bool CanSeePlayer()
     {
+        if(_target == null) return false;
+
         Vector3 toTarget = _target.position - transform.position;
         float sqrDistance = toTarget.sqrMagnitude;
 

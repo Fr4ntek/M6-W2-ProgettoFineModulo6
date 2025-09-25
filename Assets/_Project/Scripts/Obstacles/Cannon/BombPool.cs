@@ -29,7 +29,7 @@ public class BombPool : MonoBehaviour
         else
         {
             // Se il pool è esaurito puoi istanziare nuovo
-            GameObject bomb = Instantiate(_bombPrefab);
+            GameObject bomb = Instantiate(_bombPrefab, transform);
             return bomb;
         }
     }
@@ -37,6 +37,7 @@ public class BombPool : MonoBehaviour
     public void ReturnBomb(GameObject bomb)
     {
         bomb.SetActive(false);
+        bomb.GetComponent<Renderer>().enabled = true; 
         _pool.Enqueue(bomb);
     }
 }

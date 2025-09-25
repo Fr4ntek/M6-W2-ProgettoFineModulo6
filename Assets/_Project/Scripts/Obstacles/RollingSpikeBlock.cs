@@ -2,25 +2,29 @@ using UnityEngine;
 
 public class RollingSpikeBlock : MonoBehaviour
 {
-    [SerializeField] private Transform _respawnPoint; // punto in alto sulla rampa
     [SerializeField] private int _damage = 50;
     [SerializeField] private float _damageCooldown = 1f;
+    [SerializeField] private float _triggerPoint = 1f;
 
+    private Vector3 _respawnPosition;
+    private Quaternion _respawnRotation;
     private float _lastHitTime;
     private Rigidbody _rb;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _respawnPosition = transform.position;
+        _respawnRotation = transform.rotation;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.CompareTag("SpikeBlockResetPoint"))
+        if (transform.position.y < _triggerPoint)
         {
             // Reset posizione e velocità
-            transform.position = _respawnPoint.position;
-            transform.rotation = _respawnPoint.rotation;
+            transform.position = _respawnPosition;
+            transform.rotation = _respawnRotation;
             _rb.velocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
         }

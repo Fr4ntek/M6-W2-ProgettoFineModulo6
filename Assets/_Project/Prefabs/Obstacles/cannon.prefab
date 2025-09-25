@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _limitX: 6
+  _limitX: 8
 --- !u!114 &3601487314924683177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bombPool: {fileID: 0}
-  _fireRate: 2
-  _launchForce: 10
+  _fireRate: 1
+  _launchForce: 5
   _launchAngle: 45
   _firePoint: {fileID: 6484959619772354585}

@@ -187,6 +187,11 @@ MonoBehaviour:
     volume: 0.02
     loop: 0
     source: {fileID: 0}
+  - name: Bomb
+    clip: {fileID: 8300000, guid: d9c7ebc228dfcf84592c63e800b8f941, type: 3}
+    volume: 0.02
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &211776260
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ public class CannonFire : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // passo il riferimento alla pool 
+        // passo il riferimento alla pool e parte routine di esplosione
         bomb.GetComponent<Bomb>().Initialize(_bombPool);
 
         // Calcola la direzione ad arco
