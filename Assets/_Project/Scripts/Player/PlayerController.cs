@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _walkSpeed = 5f;
+    [SerializeField] private float _runSpeed = 8f;
     [SerializeField] private UnityEvent _onJump;
     [SerializeField] private UnityEvent<bool> _onCrouch;
 

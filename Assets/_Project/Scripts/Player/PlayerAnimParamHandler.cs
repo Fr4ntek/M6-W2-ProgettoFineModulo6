@@ -23,10 +23,10 @@ public class PlayerAnimParamHandler : MonoBehaviour
         _anim.SetTrigger(_paramNameJump);
     }
 
-    public void OnCrouch(bool isCrouching)
-    {
-        _anim.SetBool(_paramNameIsCrouching, isCrouching);
-    }
+    //public void OnCrouch(bool isCrouching)
+    //{
+    //    _anim.SetBool(_paramNameIsCrouching, isCrouching);
+    //}
 
     public void OnIsGroundedChanged(bool isGrounded)
     {
