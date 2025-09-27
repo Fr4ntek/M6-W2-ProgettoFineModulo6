@@ -61,9 +61,14 @@ public class AudioManager : MonoBehaviour
 
     public void StopAll()
     {
-        foreach (Sound s in sounds)
+        AudioSource[] allSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource src in allSources)
         {
-            s.source.Stop();
+            src.Stop();
         }
+        //foreach (Sound s in sounds)
+        //{
+        //    s.source.Stop();
+        //}
     }
 }

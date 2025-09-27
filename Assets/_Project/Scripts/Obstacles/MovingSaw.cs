@@ -9,15 +9,12 @@ public class MovingSaw : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 360f;
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
-    [SerializeField] private AudioSource _sawSfx;
 
     private Vector3 _targetPos;
 
     private void Start()
     {
         _targetPos = _pointB.position;
-        _sawSfx = GetComponent<AudioSource>();
-       // if ( _sawSfx != null ) _sawSfx.Play();
     }
 
     private void Update()

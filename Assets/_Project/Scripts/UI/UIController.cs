@@ -22,7 +22,6 @@ public class UIController : MonoBehaviour
     private LifeController _lifeController;
 
 
-
     void Start()
     {
         _lifeController = GetComponent<LifeController>();
@@ -64,25 +63,6 @@ public class UIController : MonoBehaviour
         _coinCount += amount;
         AudioManager.Instance.Play("Coin");
         UpdateCoinUI();
-    }
-
-    public void CheckCoins()
-    {
-        if (_coinCount >= 15)
-        {
-            _gameManager.ChangeScene("Level2");
-        }
-        else
-        {
-            StartCoroutine(ShowWarningMessage());
-        }
-    }
-
-    private IEnumerator ShowWarningMessage()
-    {
-        _coinWarningMessage.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        _coinWarningMessage.SetActive(false);
     }
 
     private void UpdateCoinUI()

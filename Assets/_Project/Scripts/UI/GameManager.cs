@@ -5,31 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject _pauseUI;
     [SerializeField] GameObject _deathUI;
     [SerializeField] GameObject _victoryUI;
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Resume();
-        }
-    }
-
-    public void Resume()
-    {
-        if (!_pauseUI.activeSelf)
-        {
-            _pauseUI.SetActive(true);
-            Time.timeScale = 0;
-        }
-        else
-        {
-            _pauseUI.SetActive(false);
-            Time.timeScale = 1;
-        }
-    }
 
     public void ExitGamePauseMenu()
     {

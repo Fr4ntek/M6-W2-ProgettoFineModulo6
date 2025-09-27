@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,18 +7,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _rotationSpeed = 5f;
     [SerializeField] private int _jumpHeight = 3;
+    [SerializeField] private int _fallMultiplier = 1;
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _walkSpeed = 5f;
     [SerializeField] private float _runSpeed = 8f;
     [SerializeField] private UnityEvent _onJump;
-    [SerializeField] private UnityEvent<bool> _onCrouch;
 
-    private Rigidbody _rb;
     public float Horizontal {get; private set;}
     public float Vertical {get; private set;}
     public bool IsRunning { get; private set;}
-    public bool IsCrouching { get; private set;}
+
+    private Rigidbody _rb;
     private Vector3 _direction;
     private Vector3 _camForward;
     private Vector3 _camRight;
@@ -58,29 +57,21 @@ public class PlayerController : MonoBehaviour
             _onJump?.Invoke();
         }
 
+        if (_rb.velocity.y < 0) // quando cade
+        {
+            _rb.velocity += Vector3.up * Physics.gravity.y * (_fallMultiplier - 1) * Time.deltaTime;
+        }
+
         // Sprint
         if (Input.GetKey(KeyCode.LeftShift) && Grounded()) 
         {
-            _speed = _walkSpeed * 2;
+            _speed = _runSpeed;
             IsRunning = true;
         }
         else
         {
             _speed = _walkSpeed;
             IsRunning = false;
-        }
-
-        // Bow
-        if (Input.GetKey(KeyCode.LeftControl) && Grounded())
-        {
-            IsCrouching = true;
-            _onCrouch?.Invoke(IsCrouching);
-            _speed = 0f;
-        }
-        else
-        {
-            IsCrouching = false;
-            _onCrouch?.Invoke(IsCrouching);
         }
 
     }
