@@ -226,4 +226,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
-  _startUp: 1
+  _startUp: 0
