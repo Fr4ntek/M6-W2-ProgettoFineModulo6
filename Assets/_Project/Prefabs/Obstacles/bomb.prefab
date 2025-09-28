@@ -51,7 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8826cb20873e76046aae0ec87e81c504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explodeTime: 5
+  _damage: 20
+  _explosionRadius: 5
+  _damageLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  _explodeTimeMin: 1
+  _explodeTimeMax: 10
   _explosionParticles: {fileID: 0}
   _explosionSound: {fileID: 0}
 --- !u!33 &3958182863594401737

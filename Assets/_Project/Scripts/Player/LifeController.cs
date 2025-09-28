@@ -28,7 +28,7 @@ public class LifeController : MonoBehaviour
     public void SetHp(int amount)
     {
         _hp = Mathf.Clamp(amount, 0, _maxHp);
-
+        onLifeChanged?.Invoke(_hp, _maxHp);
         if (_hp <= 0) Die();
     }
 
@@ -40,8 +40,6 @@ public class LifeController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         AddHp(-damage);
-        Debug.Log($"[LifeController] Danno preso: {damage}, HP attuali: {_hp}");
-        onLifeChanged?.Invoke(_hp, _maxHp);
     }
 
     public void Die()

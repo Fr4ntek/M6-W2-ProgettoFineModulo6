@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingSaw : MonoBehaviour
 {
-    [SerializeField] private int _damage = 30;
+    [SerializeField] private int _damage = 20;
     [SerializeField] private float _speed = 2f;
     [SerializeField] private float _rotationSpeed = 360f;
     [SerializeField] private Transform _pointA;

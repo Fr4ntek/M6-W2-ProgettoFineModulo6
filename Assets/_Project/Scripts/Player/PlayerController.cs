@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +6,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _rotationSpeed = 5f;
     [SerializeField] private int _jumpHeight = 3;
-    [SerializeField] private int _fallMultiplier = 1;
+    [SerializeField] private float _fallMultiplier = 1;
+    [SerializeField] private float _lowJumpMultiplier = 1;
+    [SerializeField] private float _jumpMultiplier = 2;
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _walkSpeed = 5f;
@@ -53,13 +54,18 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (Input.GetButtonDown("Jump") && Grounded())
         {
-            _rb.AddForce(Vector3.up * Mathf.Sqrt(_jumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+            float jumpForce = Mathf.Sqrt(_jumpHeight * -2f * Physics.gravity.y);
+            _rb.AddForce(Vector3.up * jumpForce * _jumpMultiplier, ForceMode.VelocityChange);
             _onJump?.Invoke();
         }
 
-        if (_rb.velocity.y < 0) // quando cade
+        if (_rb.velocity.y < 0) 
         {
             _rb.velocity += Vector3.up * Physics.gravity.y * (_fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (_rb.velocity.y > 0 && !Input.GetButton("Jump")) // se lascia Spazio scende prima
+        {
+            _rb.velocity += Vector3.up * Physics.gravity.y * (_lowJumpMultiplier - 1) * Time.deltaTime;
         }
 
         // Sprint
@@ -78,10 +84,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_canMove)
-        {
-            _rb.velocity = _direction + new Vector3(0f, _rb.velocity.y, 0f);
-        }
+        _rb.velocity = _direction + new Vector3(0f, _rb.velocity.y, 0f);
     }
 
     private bool Grounded()
@@ -90,12 +93,12 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    public IEnumerator TemporarilyDisableMovement()
-    {
-        _canMove = false;
-        yield return new WaitForSeconds(1f); 
-        _canMove = true;
-    }
+    //public IEnumerator TemporarilyDisableMovement()
+    //{
+    //    _canMove = false;
+    //    yield return new WaitForSeconds(1f); 
+    //    _canMove = true;
+    //}
 
     void OnCollisionStay(Collision collision)
     {

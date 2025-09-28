@@ -1,9 +1,14 @@
-using UnityEngine;
 using System.Collections;
-using TMPro.EditorUtilities;
+using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    [Header("Damage Settings")]
+    [SerializeField] private int _damage = 20;
+    [SerializeField] private float _explosionRadius = 5f;
+    [SerializeField] private LayerMask _damageLayer;
+
+    [Header("Bomb Settings")]
     [SerializeField] private int _explodeTimeMin = 1;
     [SerializeField] private int _explodeTimeMax = 10;
     [SerializeField] private ParticleSystem _explosionParticles;
@@ -34,9 +39,19 @@ public class Bomb : MonoBehaviour
 
         _explosionSound.Play();
         _explosionParticles.Play();
-        
-        // ho dovuto perche il main duration non matchava con la durata effettiva del particle
-        // la bomba restava visibile anche dopo la fine del PS
+
+        // Cerco player e applico danno
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _explosionRadius, _damageLayer);
+
+        foreach (Collider nearby in colliders)
+        {
+            Debug.Log("polayer trovato");
+            LifeController lc = nearby.GetComponent<LifeController>();
+            if (lc != null) lc.TakeDamage(_damage);
+        }
+
+        // ho agito sul renderer perche _explosionParticles.main.duration non matchava con la durata effettiva del particle
+        // (non so perche, forse mi sfugge qualcosa) e la bomba restava visibile anche dopo la fine del PS
         _renderer.enabled = false;
 
         // Aspetta durata particle system

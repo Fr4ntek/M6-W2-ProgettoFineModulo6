@@ -204,12 +204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ef987ad5deed64fb57eacce3a8a069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 30
+  _damage: 20
   _speed: 30
   _rotationSpeed: 1080
   _pointA: {fileID: 0}
   _pointB: {fileID: 0}
-  _sawSfx: {fileID: 0}
 --- !u!82 &6810164226711418502
 AudioSource:
   m_ObjectHideFlags: 0
